@@ -3,7 +3,11 @@ module.exports = {
         "es2021": true,
         "node": true
     },
-    "extends": "standard-with-typescript",
+    "extends": [
+        "standard-with-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+    ],
     "overrides": [
         {
             "env": {
