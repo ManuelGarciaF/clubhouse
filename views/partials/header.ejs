@@ -16,6 +16,7 @@
             </h1>
           </a>
           <div class="ml-10 flex items-baseline space-x-4">
+            <% if (!isAuthenticated) { %>
             <a
               href="/register"
               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
@@ -26,6 +27,11 @@
               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
               >Log In</a
             >
+            <% } else { %>
+            <form action="/logout" method="post">
+              <button class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" type="submit">Sign out</button>
+            </form>
+            <% } %>
           </div>
         </div>
       </nav>

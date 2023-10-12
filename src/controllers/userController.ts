@@ -74,15 +74,15 @@ export const userLoginPost = [
   }),
 ];
 
-export const userLogoutGet = (
+export const userLogoutPost = (
   req: Request,
   res: Response,
   next: NextFunction,
 ): void => {
-  req.logout((err) => {
+  req.session.destroy((err) => {
     if (err !== null) {
-      next(err);
+      return next(err);
     }
     res.redirect("/");
-  });
+  })
 };

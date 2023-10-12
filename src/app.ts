@@ -99,6 +99,14 @@ app.use(
 );
 app.use(passport.authenticate("session"));
 
+// Add locals for authentication, membership status and admin status
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(req.isAuthenticated());
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
+  next();
+});
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
