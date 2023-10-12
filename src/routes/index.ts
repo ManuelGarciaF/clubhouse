@@ -16,6 +16,11 @@ router.post('/register', userController.userCreatePost)
 router.get('/login', userController.userLoginGet)
 router.post('/login', userController.userLoginPost)
 
+// Logout
 router.post('/logout', userController.userLogoutPost)
+
+// New Member
+router.get('/join', userController.userJoinGet)
+router.post('/join', userController.userJoinPost)
 
 export default router

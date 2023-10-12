@@ -1,7 +1,8 @@
-import { IUser } from "./models/user";
+import type { IUser } from "./models/user";
+import type { HydratedDocument } from "mongoose";
 
-declare module 'express-serve-static-core' {
+declare module "express-serve-static-core" {
   export interface Request {
-    user: IUser;
+    user: HydratedDocument<IUser>;
   }
 }

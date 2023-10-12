@@ -10,6 +10,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import flash from "connect-flash";
 import type { Request, Response, NextFunction } from "express";
 import type { HttpError } from "http-errors";
 
@@ -70,7 +71,6 @@ passport.use(
 );
 passport.serializeUser((user: any, done) => {
   process.nextTick(() => {
-    console.log(user);
     done(null, user._id);
   });
 });
@@ -101,7 +101,6 @@ app.use(passport.authenticate("session"));
 
 // Add locals for authentication, membership status and admin status
 app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log(req.isAuthenticated());
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
   next();
@@ -110,7 +109,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(flash());
 app.use(express.static(path.resolve(__dirname, "../public")));
 
 app.use("/", indexRouter);
