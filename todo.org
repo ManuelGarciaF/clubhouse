@@ -1,16 +1,21 @@
 #+title: Todo
 
-* TODO Re-Style the project, select a specific topic
+* STRT Re-Style the project, select a specific topic
+Maybe a twitter clone
+//quitter//?
+** DONE Icon
 
 * DONE Change register+login buttons for a sign out button when authenticated
 
 * DONE Create page for becoming a member, requiring a secret password
 
-* TODO Index Page, list of posts
-Remember to add flash notifications for "info"
+* DONE Allow logged in members to post new messages
 
-* TODO Allow logged in members to post new messages
+* STRT Index Page, list of posts
+Remember to add flash notifications for "info"
 
 * TODO Display messages on the home-page, only show date and author to club-members
 
 * TODO Implement admin users, able to delete posts
+
+* TODO Change secrets when deploying somewhere

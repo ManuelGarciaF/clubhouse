@@ -1,12 +1,11 @@
 import express from "express";
 import * as userController from "../controllers/userController";
-import type { Request, Response } from "express";
+import * as postController from "../controllers/postController";
 
 const router = express.Router();
 
-router.get("/", function (_req: Request, res: Response) {
-  res.render("index");
-});
+// Post list index page
+router.get("/", postController.postListGet);
 
 // Register
 router.get("/register", userController.userCreateGet);
@@ -22,5 +21,8 @@ router.post("/logout", userController.userLogoutPost);
 // New Member
 router.get("/join", userController.userJoinGet);
 router.post("/join", userController.userJoinPost);
+
+// New Post
+router.post("/new-post", postController.postCreatePost);
 
 export default router;

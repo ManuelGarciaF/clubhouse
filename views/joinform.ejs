@@ -1,40 +1,47 @@
 <%- include('./partials/header') %>
-<form method="post" action="/join" class="p-4 sm:max-w-screen-sm mx-auto flex flex-col">
-  <h2 class="text-md mb-2 w-fit place-self-center p-2 font-medium text-center">Enter the <i>secret</i> password to become a member</h3>
+<div
+  class="flex flex-col flex-grow border-l border-r border-gray-300 sm:max-w-screen-sm mx-auto"
+>
+  <form method="post" action="/join">
+    <h2 class="pb-2 text-base font-semibold text-gray-900 border-b-4 p-8">
+      Enter the <i>secret</i> password to become a member
+    </h2>
 
-  <% if (messages.length > 0) { %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <% if (messages.length > 0) { %>
+    <div
+      class="bg-red-200 border-b-2 border-red-400 text-red-700 px-4 py-3 relative"
+      role="alert"
+    >
       <ul>
         <% messages.forEach((message) => { %>
-          <li><%= message %></li>
+        <li><%= message %></li>
         <% }) %>
       </ul>
     </div>
-  <% } %>
+    <% } %>
 
-  <div class="pb-8 flex flex-col">
-    <div class="my-2">
-      <label
-        for="password"
-        class="block text-sm font-medium leading-6 text-gray-900"
-        >Password</label
-      >
-      <input
-        type="text"
-        name="password"
-        id="password"
-        class="block w-full rounded-md border-0 mt-2 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 valid:ring-blue-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        required
-      />
+    <div class="pb-8 px-3 flex flex-col">
+      <div class="my-2">
+        <label
+          for="password"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >Password</label
+        >
+        <input
+          type="text"
+          name="password"
+          id="password"
+          class="block w-full rounded-sm border-0 mt-2 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 valid:ring-blue-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          required
+        />
+      </div>
     </div>
-  </div>
-  <div class="mt-6 flex items-center justify-center gap-x-6">
     <button
       type="submit"
-      class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      class="ml-3 rounded-sm bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
       Submit
     </button>
-  </div>
-</form>
+  </form>
+</div>
 <%- include('./partials/footer') %>

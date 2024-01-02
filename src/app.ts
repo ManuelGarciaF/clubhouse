@@ -30,11 +30,11 @@ if (
   process.exit(1);
 }
 const MONGO_URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@cluster0.e902pw3.mongodb.net/clubhouse?retryWrites=true&w=majority`;
-const main = async (): Promise<void> => {
+const connectToDB = async (): Promise<void> => {
   await mongoose.connect(MONGO_URI);
   console.log("Connected to mongodb");
 };
-main().catch(console.error);
+connectToDB().catch(console.error);
 
 // View engine setup
 app.set("views", path.resolve(__dirname, "../views"));
@@ -44,17 +44,19 @@ app.set("view engine", "ejs");
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username })
+      .exec()
       .then((user) => {
+        // If user not found
         if (user === null) {
-          done(null, false);
+          done(null, false, { message: "Incorrect username or password." });
           return;
         }
 
         bcrypt
           .compare(password, user.password)
-          .then((passwordMatch: boolean) => {
-            if (!passwordMatch) {
-              done(null, false);
+          .then((passwordsMatch) => {
+            if (!passwordsMatch) {
+              done(null, false, { message: "Incorrect username or password." });
               return;
             }
 
@@ -69,11 +71,13 @@ passport.use(
       });
   }),
 );
+
 passport.serializeUser((user: any, done) => {
   process.nextTick(() => {
     done(null, user._id);
   });
 });
+
 passport.deserializeUser((id: number, done) => {
   User.findById(id)
     .then((user) => {
