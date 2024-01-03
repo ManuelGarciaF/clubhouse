@@ -13,7 +13,6 @@ export const postListGet = asyncHandler(
         post.author = null;
       });
     }
-    console.log(posts);
 
     res.render("index", { posts });
   },
