@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* IBM Plex sans */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap");
+
 @layer base {
   body {
     font:
-      14px "Lucida Grande",
-      Helvetica,
-      Arial,
+      14px "IBM Plex Sans",
       sans-serif;
   }
 }

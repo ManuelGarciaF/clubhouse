@@ -19,10 +19,10 @@ router.post("/login", userController.userLoginPost);
 router.post("/logout", userController.userLogoutPost);
 
 // New Member
-router.get("/join", userController.userJoinGet);
-router.post("/join", userController.userJoinPost);
+router.get("/becomemember", userController.userBecomeMemberGet);
+router.post("/becomemember", userController.userBecomeMemberPost);
 
 // New Post
-router.post("/new-post", postController.postCreatePost);
+router.post("/newpost", postController.postCreatePost);
 
 export default router;

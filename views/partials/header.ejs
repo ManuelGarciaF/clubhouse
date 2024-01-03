@@ -1,79 +1,96 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Clubhouse Board</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-  </head>
-  <body>
-    <div class="flex justify-center w-screen h-screen px-4 text-gray-900">
-      <div class="flex mx-auto w-full max-w-screen-lg">
-        <div class="flex flex-col w-64 py-4 pr-3">
-          <div class="flex flex-row justify-start border-b-2">
-              <img
-                class="flex-shrink-0 w-10 h-10"
-                src="/images/icon.svg"
-                alt="Site icon"
-              />
-            <h1 class="py-2 px-2 text-2xl font-bold">Quitter</h1>
-          </div>
-          <a
-            class="px-3 py-2 mt-2 text-md font-medium order-3 rounded-sm hover:bg-gray-300"
-            href="/"
-            >Home</a
-          >
-          <% if (isAuthenticated) { %>
-            <% if (!user.isMember) { %>
-            <a
-              class="px-3 py-2 mt-2 text-md font-medium order-3 rounded-sm hover:bg-gray-300"
-              href="join"
-              >Become a member</a
-            >
-            <% } %>
-          <form action="/logout" class="order-last" method="post">
-            <button
-              type="submit"
-              class="w-full flex px-3 py-2 mt-2 text-md rounded-sm font-medium hover:bg-gray-200"
-            >
-              <img
-                class="flex-shrink-0 w-10 h-10"
-                src="/images/user.svg"
-                alt="User icon"
-              />
-              <div class="flex flex-col ml-2">
-                <span
-                  class="mt-1 text-sm font-semibold flex flex-row items-center"
-                >
-                  <span class="align-text-bottom"> <%= user.username %> </span>
-                  <% if (user.isMember) { %>
-                  <img
-                    class="flex-shrink-0 w-3 h-3 ml-1"
-                    src="/images/check-mark.svg"
-                    alt="Member symbol"
-                    title="Member of the club"
-                  />
-                  <% } %>
-                </span>
-                <span class="text-xs text-gray-600">Log out</span>
-              </div>
-            </button>
-          </form>
-          <% } else { %>
-          <a
-            class="px-3 py-2 mt-2 text-md font-medium rounded-sm text-white order-1 text-bold bg-indigo-600 hover:bg-indigo-700"
-            href="/register"
-            >Sign Up</a
-          >
-          <a
-            class="px-3 py-2 mt-2 text-md order-2 font-medium rounded-sm bg-gray-200 hover:bg-gray-300"
-            href="/login"
-            >Log In</a
-          >
-          <% } %>
-        </div>
+    <head>
+        <title>Clubhouse Board</title>
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
+    </head>
+    <body>
+        <div class="flex h-screen w-screen justify-center px-4 text-gray-900">
+            <div class="mx-auto flex w-full max-w-screen-lg">
+                <div class="flex w-64 flex-col py-4 pr-3">
+                    <div class="flex flex-row justify-start border-b-2">
+                        <img
+                            class="h-10 w-10 flex-shrink-0"
+                            src="/images/icon.svg"
+                            alt="Site icon"
+                        />
+                        <h1 class="px-2 py-2 text-2xl font-bold">Quitter</h1>
+                    </div>
+                    <a
+                        class="text-md order-3 mt-2 rounded-sm px-3 py-2 font-medium hover:bg-gray-300"
+                        href="/"
+                        >Home</a
+                    >
+                    <% if (isAuthenticated) { %> <% if (!user.isMember) { %>
+                    <a
+                        class="text-md order-3 mt-2 rounded-sm px-3 py-2 font-medium hover:bg-gray-300"
+                        href="/becomemember"
+                        >Become a member</a
+                    >
+                    <% } %>
+                    <form action="/logout" class="order-last" method="post">
+                        <button
+                            type="submit"
+                            class="text-md mt-2 flex w-full rounded-sm px-3 py-2 font-medium hover:bg-gray-200"
+                        >
+                            <img
+                                class="h-10 w-10 flex-shrink-0"
+                                src="/images/user.svg"
+                                alt="User icon"
+                            />
+                            <div class="ml-2 flex flex-col">
+                                <span
+                                    class="mt-1 flex flex-row items-center text-sm font-semibold"
+                                >
+                                    <span class="align-text-bottom">
+                                        <%= user.username %>
+                                    </span>
+                                    <% if (user.isMember) { %>
+                                    <img
+                                        class="ml-1 h-3 w-3 flex-shrink-0"
+                                        src="/images/check-mark.svg"
+                                        alt="Member symbol"
+                                        title="Member of the club"
+                                    />
+                                    <% } %>
+                                </span>
+                                <span class="text-xs text-gray-600"
+                                    >Log out</span
+                                >
+                            </div>
+                        </button>
+                    </form>
+                    <% } else { %>
+                    <a
+                        class="text-md text-bold order-1 mt-2 rounded-sm bg-indigo-600 px-3 py-2 font-medium text-white hover:bg-indigo-700"
+                        href="/register"
+                        >Sign Up</a
+                    >
+                    <a
+                        class="text-md order-2 mt-2 rounded-sm bg-gray-200 px-3 py-2 font-medium hover:bg-gray-300"
+                        href="/login"
+                        >Log In</a
+                    >
+                    <% } %>
+                </div>
