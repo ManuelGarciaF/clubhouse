@@ -25,4 +25,7 @@ router.post("/becomemember", userController.userBecomeMemberPost);
 // New Post
 router.post("/newpost", postController.postCreatePost);
 
+// Delete Post
+router.post("/deletepost", postController.postDeletePost);
+
 export default router;

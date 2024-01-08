@@ -8,7 +8,8 @@ export const postListGet = asyncHandler(
         const posts = await Post.find().populate("author").sort("-date").exec();
 
         // Only show author of posts if user is a member.
-        const showAuthor: boolean = req.isAuthenticated() && req.user.isMember;
+        const showAuthor: boolean =
+            req.isAuthenticated() && (req.user.isMember || req.user.isAdmin);
 
         res.render("index", {
             posts,
@@ -24,7 +25,7 @@ export const postCreatePost = [
         .trim()
         .isLength({ min: 1 })
         .escape(),
-    asyncHandler(async (req, res) => {
+    asyncHandler(async (req: Request, res: Response): Promise<void> => {
         // Require authentication
         if (!req.isAuthenticated()) {
             res.redirect("/login");
@@ -48,3 +49,22 @@ export const postCreatePost = [
         res.redirect("/");
     }),
 ];
+
+export const postDeletePost = asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+        // Require authentication
+        if (!req.isAuthenticated()) {
+            res.redirect("/login");
+            return;
+        }
+        // Verify user is an admin
+        if (!req.user.isAdmin) {
+            res.status(403);
+            res.send("Forbidden: You must be an admin to delete posts");
+            return;
+        }
+
+        await Post.findByIdAndDelete(req.body.id).exec();
+        res.redirect(303, "/");
+    },
+);

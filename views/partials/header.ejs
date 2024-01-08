@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Clubhouse Board</title>
+        <title>Quitter</title>
         <link rel="stylesheet" href="/stylesheets/style.css" />
         <link
             rel="apple-touch-icon"
@@ -24,19 +24,27 @@
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <div class="flex h-screen w-screen justify-center px-4 text-gray-900">
-            <div class="mx-auto flex w-full max-w-screen-lg">
-                <div class="flex w-64 flex-col py-4 pr-3">
-                    <div class="flex flex-row flex-wrap justify-start border-b-2">
+        <div class="flex h-screen w-screen justify-center text-gray-900">
+            <div
+                class="mx-auto flex w-full max-w-screen-lg flex-col lg:flex-row"
+            >
+                <div class="flex w-full flex-col border-b-4 px-4 py-4 lg:pr-2 lg:w-64">
+                    <a
+                        class="flex flex-row flex-wrap justify-start border-b-2"
+                        href="/"
+                    >
                         <img
                             class="h-10 w-10 flex-shrink-0"
                             src="/images/icon.svg"
                             alt="Site icon"
                         />
                         <h1 class="px-2 py-2 text-2xl font-bold">Quitter</h1>
-                    </div>
+                    </a>
                     <a
                         class="text-md order-3 mt-2 rounded-sm px-3 py-2 font-medium hover:bg-gray-300"
                         href="/"
@@ -94,3 +102,6 @@
                     >
                     <% } %>
                 </div>
+                <div
+                    class="mx-auto flex flex-grow flex-col border-l border-r border-gray-300 w-full lg:max-w-screen-md"
+                >

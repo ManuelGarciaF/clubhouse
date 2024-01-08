@@ -1,97 +1,98 @@
 <%- include('./partials/header') %>
-<div
-    class="mx-auto flex flex-grow flex-col border-l border-r border-gray-300 sm:max-w-screen-sm"
->
-    <div class="flex-grow overflow-auto">
+<div class="flex-grow overflow-auto">
+    <% if (errorMessages.length > 0) { %>
+    <div
+        class="relative border-b-2 border-red-400 bg-red-200 px-4 py-3 text-red-700"
+        role="alert"
+    >
+        <ul>
+            <% errorMessages.forEach((message) => { %>
+            <li><%= message %></li>
+            <% }) %>
+        </ul>
+    </div>
+    <% } %> <% if (infoMessages.length > 0) { %>
+    <div
+        class="relative border-b-2 border-sky-400 bg-sky-200 px-4 py-3 text-sky-700"
+        role="alert"
+    >
+        <ul>
+            <% infoMessages.forEach((message) => { %>
+            <li><%= message %></li>
+            <% }) %>
+        </ul>
+    </div>
+    <% } %> <% if (isAuthenticated) { %>
+    <h2 class="border-b-2 p-8 pb-2 text-base font-semibold text-gray-900">
+        Make a post
+    </h2>
+    <div class="flex w-full border-b-4 border-gray-300 p-8">
+        <form method="post" action="/newpost" class="flex flex-grow flex-col">
+            <textarea
+                class="rounded-sm border border-gray-500 bg-transparent p-3"
+                name="postcontent"
+                id="postcontent"
+                rows="3"
+                placeholder="What's happening?"
+                required
+            ></textarea>
+            <div class="mt-2 flex justify-end">
+                <button
+                    type="submit"
+                    class="ml-3 rounded-sm bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                    Post
+                </button>
+            </div>
+        </form>
+    </div>
+    <% } else { %>
+    <p class="border-b-2 px-8 py-4 pb-2 text-base text-gray-600">
+        <i>Create an account to make posts</i>
+    </p>
+    <% } %>
+    <h2 class="border-b-2 p-8 pb-2 text-base font-semibold text-gray-900">
+        Latest Posts
+    </h2>
+    <% posts.forEach((post) => { %>
+    <div class="flex w-full border-b border-gray-300 p-8">
+        <div class="ml-4 flex flex-grow flex-col">
+            <div class="flex">
+                <% if (showAuthor) { %>
+                <span class="font-semibold"><%= post.author.username %></span>
+                <% if (post.author.isMember) { %>
+                <img
+                    class="ml-1 h-3 w-3 flex-shrink-0"
+                    src="/images/check-mark.svg"
+                    alt="Member symbol"
+                    title="Member of the club"
+                />
+                <% } %>
 
-        <% if (errorMessages.length > 0) { %>
-        <div
-            class="relative border-b-2 border-red-400 bg-red-200 px-4 py-3 text-red-700"
-            role="alert"
-        >
-            <ul>
-                <% errorMessages.forEach((message) => { %>
-                <li><%= message %></li>
-                <% }) %>
-            </ul>
-        </div>
-        <% } %>
-        <% if (infoMessages.length > 0) { %>
-        <div
-            class="relative border-b-2 border-sky-400 bg-sky-200 px-4 py-3 text-sky-700"
-            role="alert"
-        >
-            <ul>
-                <% infoMessages.forEach((message) => { %>
-                <li><%= message %></li>
-                <% }) %>
-            </ul>
-        </div>
-        <% } %>
-
-        <% if (isAuthenticated) { %>
-        <h2 class="border-b-2 p-8 pb-2 text-base font-semibold text-gray-900">
-            Make a post
-        </h2>
-        <div class="flex w-full border-b-4 border-gray-300 p-8">
-            <form
-                method="post"
-                action="/newpost"
-                class="flex flex-grow flex-col"
-            >
-                <textarea
-                    class="rounded-sm border border-gray-500 bg-transparent p-3"
-                    name="postcontent"
-                    id="postcontent"
-                    rows="3"
-                    placeholder="What's happening?"
-                    required
-                ></textarea>
-                <div class="mt-2 flex justify-end">
+                <span class="ml-auto text-sm"
+                    ><%= post.getRelativeDate() %></span
+                >
+                <% } else { %>
+                <span
+                    class="font-semibold"
+                    title="Become a member in order to see the author"
+                    >Anonymous</span
+                >
+                <% } %> <% if (user.isAdmin) { %>
+                <form method="post" action="/deletepost">
+                    <input type="hidden" name="id" value="<%= post._id %>" />
                     <button
                         type="submit"
-                        class="ml-3 rounded-sm bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        class="ml-2 inline font-bold underline hover:no-underline"
                     >
-                        Post
+                        Delete
                     </button>
-                </div>
-            </form>
-        </div>
-        <% } else { %>
-        <p class="border-b-2 px-8 py-4 pb-2 text-base text-gray-600">
-            <i>Create an account to make a post</i>
-        </p>
-        <% } %>
-        <h2 class="border-b-2 p-8 pb-2 text-base font-semibold text-gray-900">
-            Latest Posts
-        </h2>
-        <% posts.forEach((post) => { %>
-        <div class="flex w-full border-b border-gray-300 p-8">
-            <div class="ml-4 flex flex-grow flex-col">
-                <div class="flex">
-                    <% if (showAuthor) { %>
-                    <span class="font-semibold"
-                        ><%= post.author.username %></span
-                    >
-                    <% if (post.author.isMember) { %>
-                    <img
-                        class="ml-1 h-3 w-3 flex-shrink-0"
-                        src="/images/check-mark.svg"
-                        alt="Member symbol"
-                        title="Member of the club"
-                    />
-                    <% } %>
-                    <span class="ml-auto text-sm"
-                        ><%= post.getRelativeDate() %></span
-                    >
-                    <% } else { %>
-                    <span class="font-semibold">Anonymous</span>
-                    <% } %>
-                </div>
-                <p class="mt-1"><%- post.content %></p>
+                </form>
+                <% } %>
             </div>
+            <p class="mt-1"><%- post.content %></p>
         </div>
-        <% }) %>
     </div>
+    <% }) %>
 </div>
 <%- include('./partials/footer') %>

@@ -23,37 +23,47 @@ export const userCreatePost = [
         "Password confirmation must match password.",
     ).custom((value, { req }) => value === req.body.password),
 
-    asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            res.render("registerform");
-            return;
-        }
-
-        bcrypt.hash(
-            req.body.password,
-            10,
-            (err: Error | null, hashedPassword: string) => {
-                if (err !== null) {
-                    next(err);
-                    return;
-                }
-
-                const user = new User({
-                    username: req.body.username,
-                    password: hashedPassword,
+    asyncHandler(
+        async (
+            req: Request,
+            res: Response,
+            next: NextFunction,
+        ): Promise<void> => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach((error) => {
+                    req.flash("error", error.msg);
                 });
+                res.render("registerform");
+                return;
+            }
 
-                user.save()
-                    .then(() => {
-                        res.redirect("/login");
-                    })
-                    .catch((err) => {
+            // Indentation hell
+            bcrypt.hash(
+                req.body.password,
+                10,
+                (err: Error | null, hashed: string): void => {
+                    if (err !== null) {
                         next(err);
+                        return;
+                    }
+
+                    const user = new User({
+                        username: req.body.username,
+                        password: hashed,
                     });
-            },
-        );
-    }),
+
+                    user.save()
+                        .then(() => {
+                            res.redirect("/login");
+                        })
+                        .catch((err) => {
+                            next(err);
+                        });
+                },
+            );
+        },
+    ),
 ];
 
 export const userLoginGet = (req: Request, res: Response): void => {
@@ -111,7 +121,7 @@ export const userBecomeMemberPost = [
         .trim()
         .isLength({ min: 1 })
         .escape(),
-    asyncHandler(async (req: Request, res: Response) => {
+    asyncHandler(async (req: Request, res: Response): Promise<void> => {
         if (!req.isAuthenticated()) {
             res.redirect("/login");
             return;
