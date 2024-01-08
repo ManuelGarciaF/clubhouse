@@ -7,9 +7,15 @@ export const postListGet = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
         const posts = await Post.find().populate("author").sort("-date").exec();
 
+        // Only show author of posts if user is a member.
         const showAuthor: boolean = req.isAuthenticated() && req.user.isMember;
 
-        res.render("index", { posts, showAuthor });
+        res.render("index", {
+            posts,
+            showAuthor,
+            errorMessages: req.flash("error"),
+            infoMessages: req.flash("info"),
+        });
     },
 );
 
@@ -27,7 +33,8 @@ export const postCreatePost = [
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            res.render("index", { errors: errors.array() });
+            req.flash("error", "Post content must not be empty.");
+            res.redirect("/");
             return;
         }
 

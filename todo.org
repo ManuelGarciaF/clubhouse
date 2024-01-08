@@ -11,8 +11,9 @@ Maybe a twitter clone
 
 * DONE Allow logged in members to post new messages
 
-* STRT Index Page, list of posts
-Remember to add flash notifications for "info"
+* DONE Index Page, list of posts
+
+* DONE Add flash notifications in index
 
 * TODO Display messages on the home-page, only show date and author to club-members
 

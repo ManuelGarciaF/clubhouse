@@ -119,14 +119,15 @@ export const userBecomeMemberPost = [
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            res.render("joinform");
+            req.flash("error", "Password must not be empty.");
+            res.redirect("/becomemember");
             return;
         }
 
         console.log(req.body.password);
         if (req.body.password !== process.env.JOIN_PASSWORD) {
             req.flash("error", "Incorrect password.");
-            res.render("joinform", { messages: req.flash("error") });
+            res.redirect("/becomemember");
             return;
         }
         req.user.isMember = true;
